@@ -2,7 +2,7 @@
   "compatibleVersion": 3,
   "bundleVersion": 1,
   "name": "Browser Preview",
-  "description": "Preview quickly an artboard in your browser.",
+  "description": "Quickly preview an artboard in your browser.",
   "author": "Lukas Oppermann",
   "icon": "icon.png",
   "commands": [
