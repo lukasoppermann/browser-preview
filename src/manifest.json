@@ -1,0 +1,27 @@
+{
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "name": "Browser Preview",
+  "description": "Preview quickly an artboard in your browser.",
+  "author": "Lukas Oppermann",
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "Preview Artboard",
+      "identifier": "browser-preview",
+      "script": "./my-command.js"
+    },
+    {
+      "name": "Settings",
+      "identifier": "browser-preview-settings",
+      "script": "./my-command.js"
+    }
+  ],
+  "menu": {
+    "title": "🔍 Browser Preview",
+    "items": [
+      "browser-preview",
+      "browser-preview-settings"
+    ]
+  }
+}
