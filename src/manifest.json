@@ -9,12 +9,12 @@
     {
       "name": "Preview Artboard",
       "identifier": "browser-preview",
-      "script": "./my-command.js"
+      "script": "./browser-preview.js"
     },
     {
       "name": "Settings",
       "identifier": "browser-preview-settings",
-      "script": "./my-command.js"
+      "script": "./browser-preview-settings.js"
     }
   ],
   "menu": {
