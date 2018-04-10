@@ -4,6 +4,14 @@ var Settings = require('sketch/settings')
 var sketch = require('sketch')
 
 export default function(context) {
+  // export options
+  const options = { 
+    scales: '2', 
+    formats: 'png',
+    output: '/tmp',
+    overwriting: true
+  }
+  let browser = Settings.settingForKey('browser-preview-browser') || 'Safari'
   // get sketch document
   const document = sketch.getSelectedDocument()
   // get selected page
@@ -15,35 +23,20 @@ export default function(context) {
     return;
   }
   
-  if( context.selection.length === 1 ){
+  if( context.selection.length >= 1 ){
     const artboard = context.selection.firstObject();
     if( artboard && artboard.isKindOfClass(MSArtboardGroup) ){
-      context.document.showMessage(artboard.name())
+      // create export file directory
+      let file = options.output + "/" + artboard.name() + "@" + options.scales + "x." + options.formats
+      // show message
+      context.document.showMessage(`Previewing: ${artboard.name()} in ${browser}`)
+      // export 
+      sketch.export(artboard, options)
+      // play sound
+      util.runCommand("/usr/bin/afplay", ["/System/Library/Sounds/Glass.aiff"])
+      // open export in browser
+      util.runCommand('/usr/bin/open', ["-a", browser, file])
     }
     return;
   }
-  
-
-    // let selectedArtboards = new Set(
-    //   util.arrayFromNSArray(context.selection)
-    //     .map(layer => util.getContainingArtboard(layer))
-    //     .filter(layer => !!layer)
-    // );
-    // 
-    // 
-    // 
-    // selectedArtboards.forEach(artboard => {
-    //     context.document.showMessage(artboard.name);
-    // })
-    // 
-    // 
-    // util.setSelection(context, Array.from(selectedArtboards));
-
-
-  // if (artboard.length === 0) {
-  //   context.document.showMessage(Settings.settingForKey('browser-preview-browser'))
-  // } else {
-  //   context.document.showMessage(`${artboard.length} layers selected.`)
-  //   context.document.showMessage(artboard)
-  // }
 }
