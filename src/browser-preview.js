@@ -1,4 +1,5 @@
 import * as util from './sketch-utils'
+import createPreview from './create-preview'
 
 var Settings = require('sketch/settings')
 var sketch = require('sketch')
@@ -26,16 +27,14 @@ export default function(context) {
   if( context.selection.length >= 1 ){
     const artboard = context.selection.firstObject();
     if( artboard && artboard.isKindOfClass(MSArtboardGroup) ){
-      // create export file directory
-      let file = options.output + "/" + artboard.name() + "@" + options.scales + "x." + options.formats
       // show message
       context.document.showMessage(`Previewing: ${artboard.name()} in ${browser}`)
-      // export 
-      sketch.export(artboard, options)
+      // create export file directory
+      let previewFile = createPreview(artboard, options)
       // play sound
       util.runCommand("/usr/bin/afplay", ["/System/Library/Sounds/Glass.aiff"])
       // open export in browser
-      util.runCommand('/usr/bin/open', ["-a", browser, file])
+      util.runCommand('/usr/bin/open', ["-a", browser, previewFile])
     }
     return;
   }
