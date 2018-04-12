@@ -28,7 +28,7 @@ export default function(context) {
     const artboard = context.selection.firstObject();
     if( artboard && artboard.isKindOfClass(MSArtboardGroup) ){
       // show message
-      context.document.showMessage(`Previewing: ${artboard.name()} in ${browser}`)
+      context.document.showMessage(`Creating preview for "${artboard.name()}" in ${browser}`)
       // create export file directory
       let previewFile = createPreview(artboard, options)
       // play sound
