@@ -4,7 +4,7 @@
   "name": "🔍 Browser Preview",
   "description": "Quickly preview an artboard in your browser.",
   "author": "Lukas Oppermann",
-  "icon": "icon.png",
+  "icon": "browser-preview.png",
   "commands": [
     {
       "name": "Preview Artboard",
