@@ -1,6 +1,10 @@
 {
   "name": "browser-preview",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lukasoppermann/browser-preview.git"
+  },
   "engines": {
     "sketch": ">=3.0"
   },
