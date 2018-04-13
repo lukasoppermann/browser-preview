@@ -1,6 +1,7 @@
 {
   "name": "browser-preview",
   "version": "1.0.0",
+  "description": "Quickly preview an artboard in your browser.",
   "repository": {
     "type": "git",
     "url": "https://github.com/lukasoppermann/browser-preview.git"
