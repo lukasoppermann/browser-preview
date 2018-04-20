@@ -12,7 +12,7 @@
   "skpm": {
     "name": "browser-preview",
     "manifest": "src/manifest.json",
-    "main": "plugin.sketchplugin",
+    "main": "browser-preview.sketchplugin",
     "assets": [
       "assets/**/*"
     ]
