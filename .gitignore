@@ -1,6 +1,5 @@
 # build artifacts
 plugin.sketchplugin
-browser-preview.sketchplugin
 
 # npm
 node_modules

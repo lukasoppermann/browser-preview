@@ -1,0 +1,31 @@
+{
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "name": "🔍 Browser Preview",
+  "description": "Quickly preview an artboard in your browser.",
+  "author": "Lukas Oppermann",
+  "icon": "browser-preview.png",
+  "commands": [
+    {
+      "name": "Preview Artboard",
+      "identifier": "browser-preview",
+      "script": "browser-preview.js",
+      "shortcut": "cmd shift +"
+    },
+    {
+      "name": "Settings",
+      "identifier": "browser-preview-settings",
+      "script": "browser-preview-settings.js"
+    }
+  ],
+  "menu": {
+    "title": "🔍 Browser Preview",
+    "items": [
+      "browser-preview",
+      "browser-preview-settings"
+    ]
+  },
+  "version": "2.0.1",
+  "disableCocoaScriptPreprocessor": true,
+  "appcast": "https://raw.githubusercontent.com/lukasoppermann/browser-preview/master/.appcast.xml"
+}
