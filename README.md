@@ -5,6 +5,14 @@ This plugin previews the selected artboard in a `2x` resolution in the browsers,
 
 ## Installation
 
+### 🏃 Sketch Runner
+Go to the `install` tab in runner and search for `Browser Preview`.
+
+<a href="http://bit.ly/SketchRunnerWebsite">
+   <img src="http://bit.ly/RunnerBadgeBlue">
+</a>
+
+### Manual Installation
 1. Download the [bundle](https://github.com/lukasoppermann/browser-preview/releases/latest) file (first file with the package icon) and extract it.
 2. Double click the `browser-preview.sketchplugin` bundle
 

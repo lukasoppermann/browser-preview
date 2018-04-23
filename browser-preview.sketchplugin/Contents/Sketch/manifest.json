@@ -1,6 +1,7 @@
 {
   "compatibleVersion": 3,
   "bundleVersion": 1,
+  "identifier": "com.lukasoppermann.sketch.browser-preview",
   "name": "🔍 Browser Preview",
   "description": "Quickly preview an artboard in your browser.",
   "author": "Lukas Oppermann",
@@ -25,7 +26,7 @@
       "browser-preview-settings"
     ]
   },
-  "version": "2.0.2",
+  "version": "2.0.3",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/lukasoppermann/browser-preview/master/.appcast.xml"
 }
