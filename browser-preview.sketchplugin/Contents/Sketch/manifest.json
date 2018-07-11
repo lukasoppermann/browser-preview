@@ -26,7 +26,7 @@
       "browser-preview-settings"
     ]
   },
-  "version": "2.0.3",
+  "version": "2.0.4",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/lukasoppermann/browser-preview/master/.appcast.xml"
 }
