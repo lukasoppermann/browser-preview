@@ -1,1 +1,498 @@
-var that=this;function __skpm_run(e,t){that.context=t;var n=function(e){var t={};function n(i){if(t[i])return t[i].exports;var r=t[i]={i:i,l:!1,exports:{}};return e[i].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=e,n.c=t,n.d=function(e,t,i){n.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:i})},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=1)}([function(e,t){e.exports=require("sketch")},function(e,t,n){Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=l.settingForKey("browser-preview-browser")||"Safari";c.getSelectedDocument().selectedPage;if(0!=e.selection.length)if(e.selection.length>=1){var n=e.selection.firstObject();if(n&&n.isKindOfClass(MSArtboardGroup)){e.document.showMessage('Creating preview for "'+String(n.name())+'" in '+String(t));var i=(0,o.default)(n,{scales:"2",formats:"png",output:"/tmp",overwriting:!0});r.runCommand("/usr/bin/afplay",["/System/Library/Sounds/Glass.aiff"]),r.runCommand("/usr/bin/open",["-a",t,i])}}else;else e.document.showMessage("⚠️ Please select an artboard.")};var i,r=function(e){if(e&&e.__esModule)return e;var t={};if(null!=e)for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n]);return t.default=e,t}(n(2)),a=n(3),o=(i=a)&&i.__esModule?i:{default:i};var l=n(5),c=n(0)},function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.runCommand=function(e,t){var n=NSTask.alloc().init();return n.setLaunchPath_(e),n.arguments=t,n.launch(),n.waitUntilExit(),0==n.terminationStatus()}},function(e,t,n){Object.defineProperty(t,"__esModule",{value:!0});var i=n(0),r=n(4);t.default=function(e,t){i.export(e,t);var n=t.output+"/"+e.name()+"@"+t.scales+"x."+t.formats,a=String(t.output)+"/"+String(e.name())+".html",o="#ffffff";if(1===e.hasBackgroundColor()){var l=e.backgroundColor();o="rgba("+255*l.red()+","+255*l.green()+","+255*l.blue()+","+String(l.alpha())+")"}var c="<!DOCTYPE html>\n  <html>\n    <head>\n      <title>"+String(e.name())+'</title>\n      <style type="text/css">\n        html, body{\n          margin: 0;\n          background: '+o+";\n        }\n        .flex{\n          width: 100vw;\n          display: flex;\n          justify-content: center;\n        }\n        img{\n          position: relative;\n          width: "+String(e.bounds().size.width)+"px;\n          height: "+String(e.bounds().size.height)+'px;\n        }\n      </style>\n    </head>\n    <body>\n      <div class="flex">\n        <img src="'+n+'" alt="'+String(e.name())+'" /\n      </div>\n    </body>\n  </html>';return r.writeFileSync(a,c),a}},function(e,t){e.exports.constants={F_OK:0,R_OK:4,W_OK:2,X_OK:1},e.exports.accessSync=function(t,n){n|=0;var i=NSFileManager.defaultManager();switch(n){case 0:return e.exports.existsSync(t);case 1:return Boolean(i.isExecutableFileAtPath(t));case 2:return Boolean(i.isWritableFileAtPath(t));case 3:return Boolean(i.isExecutableFileAtPath(t)&&i.isWritableFileAtPath(t));case 4:return Boolean(i.isReadableFileAtPath(t));case 5:return Boolean(i.isReadableFileAtPath(t)&&i.isExecutableFileAtPath(t));case 6:return Boolean(i.isReadableFileAtPath(t)&&i.isWritableFileAtPath(t));case 7:return Boolean(i.isReadableFileAtPath(t)&&i.isWritableFileAtPath(t)&&i.isExecutableFileAtPath(t))}},e.exports.appendFileSync=function(t,n,i){if(e.exports.existsSync(t)){var r=NSFileHandle.fileHandleForWritingAtPath(t);r.seekToEndOfFile(),r.writeData(n.dataUsingEncoding(NSUTF8StringEncoding))}else n.writeToFile_atomically(t,!0)},e.exports.chmodSync=function(e,t){var n=MOPointer.alloc().init();if(NSFileManager.defaultManager().setAttributes_ofItemAtPath_error({NSFilePosixPermissions:t},e,n),null!==n.value())throw new Error(n.value())},e.exports.copyFileSync=function(e,t,n){var i=MOPointer.alloc().init();if(NSFileManager.defaultManager().copyItemAtPath_toPath_error(e,t,i),null!==i.value())throw new Error(i.value())},e.exports.existsSync=function(e){var t=NSFileManager.defaultManager();return Boolean(t.fileExistsAtPath(e))},e.exports.linkSync=function(e,t){var n=MOPointer.alloc().init();if(NSFileManager.defaultManager().linkItemAtPath_toPath_error(e,t,n),null!==n.value())throw new Error(n.value())},e.exports.mkdirSync=function(e,t){t=t||511;var n=MOPointer.alloc().init();if(NSFileManager.defaultManager().createDirectoryAtPath_withIntermediateDirectories_attributes_error(e,!1,{NSFilePosixPermissions:t},n),null!==n.value())throw new Error(n.value())},e.exports.mkdtempSync=function(t){var n=t+function(){for(var e="",t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",n=0;n<6;n++)e+=t.charAt(Math.floor(Math.random()*t.length));return e}();return e.exports.mkdirSync(n),n},e.exports.readdirSync=function(e){for(var t=NSFileManager.defaultManager().subpathsAtPath(e),n=[],i=0;i<t.length;i++)n.push(t[i]);return n},e.exports.readFileSync=function(e,t){var n=t&&t.encoding?t.encoding:t||"buffer",i=(MOPointer.alloc().init(),NSFileManager.defaultManager().contentsAtPath(e));switch(n){case"utf8":return String(NSString.alloc().initWithData_encoding(i,NSUTF8StringEncoding));case"ascii":return String(NSString.alloc().initWithData_encoding(i,NSASCIIStringEncoding));case"utf16le":case"ucs2":return String(NSString.alloc().initWithData_encoding(i,NSUTF16LittleEndianStringEncoding));case"base64":var r=NSData.alloc().initWithBase64EncodedData_options(i,0);return String(NSString.alloc().initWithData_encoding(r,NSUTF8StringEncoding));case"latin1":case"binary":return String(NSString.alloc().initWithData_encoding(i,NSISOLatin1StringEncoding));case"hex":default:return i}},e.exports.readlinkSync=function(e){var t=MOPointer.alloc().init(),n=NSFileManager.defaultManager().destinationOfSymbolicLinkAtPath_error(e,t);if(null!==t.value())throw new Error(t.value());return n},e.exports.realpathSync=function(e){return NSString.stringByResolvingSymlinksInPath(e)},e.exports.renameSync=function(e,t){var n=MOPointer.alloc().init();if(NSFileManager.defaultManager().moveItemAtPath_toPath_error(e,t,n),null!==n.value())throw new Error(n.value())},e.exports.rmdirSync=function(e){var t=MOPointer.alloc().init();if(NSFileManager.defaultManager().removeItemAtPath_error(e,t),null!==t.value())throw new Error(t.value())},e.exports.statSync=function(e){var t=MOPointer.alloc().init(),n=NSFileManager.defaultManager().attributesOfItemAtPath_error(e,t);if(null!==t.value())throw new Error(t.value());return{dev:String(n.NSFileDeviceIdentifier),mode:n.NSFileType|n.NSFilePosixPermissions,nlink:Number(n.NSFileReferenceCount),uid:String(n.NSFileOwnerAccountID),gid:String(n.NSFileGroupOwnerAccountID),size:Number(n.NSFileSize),atimeMs:1e3*Number(n.NSFileModificationDate.timeIntervalSince1970()),mtimeMs:1e3*Number(n.NSFileModificationDate.timeIntervalSince1970()),ctimeMs:1e3*Number(n.NSFileModificationDate.timeIntervalSince1970()),birthtimeMs:1e3*Number(n.NSFileCreationDate.timeIntervalSince1970()),atime:new Date(1e3*Number(n.NSFileModificationDate.timeIntervalSince1970())+.5),mtime:new Date(1e3*Number(n.NSFileModificationDate.timeIntervalSince1970())+.5),ctime:new Date(1e3*Number(n.NSFileModificationDate.timeIntervalSince1970())+.5),birthtime:new Date(1e3*Number(n.NSFileCreationDate.timeIntervalSince1970())+.5),isBlockDevice:function(){return n.NSFileType===NSFileTypeBlockSpecial},isCharacterDevice:function(){return n.NSFileType===NSFileTypeCharacterSpecial},isDirectory:function(){return n.NSFileType===NSFileTypeDirectory},isFIFO:function(){return!1},isFile:function(){return n.NSFileType===NSFileTypeRegular},isSocket:function(){return n.NSFileType===NSFileTypeSocket},isSymbolicLink:function(){return n.NSFileType===NSFileTypeSymbolicLink}}},e.exports.symlinkSync=function(e,t){var n=MOPointer.alloc().init();NSFileManager.defaultManager().createSymbolicLinkAtPath_withDestinationPath_error(t,e,n);if(null!==n.value())throw new Error(n.value())},e.exports.truncateSync=function(e,t){var n=NSFileHandle.fileHandleForUpdatingAtPath(sFilePath);n.truncateFileAtOffset(t||0),n.closeFile()},e.exports.unlinkSync=function(e){var t=MOPointer.alloc().init();NSFileManager.defaultManager().removeItemAtPath_error(e,t);if(null!==t.value())throw new Error(t.value())},e.exports.utimesSync=function(e,t,n){var i=MOPointer.alloc().init();NSFileManager.defaultManager().setAttributes_ofItemAtPath_error({NSFileModificationDate:t},e,i);if(null!==i.value())throw new Error(i.value())},e.exports.writeFileSync=function(e,t,n){var i=n&&n.encoding?n.encoding:n||"utf8";if(t&&t.mocha&&"NSData"===t.mocha().class())t.writeToFile_atomically(e,!0);else{var r=MOPointer.alloc().init(),a=NSString.stringWithString(t);switch(i){case"utf8":return void a.writeToFile_atomically_encoding_error(e,!0,NSUTF8StringEncoding,r);case"ascii":return void a.writeToFile_atomically_encoding_error(e,!0,NSASCIIStringEncoding);case"utf16le":case"ucs2":return void a.writeToFile_atomically_encoding_error(e,!0,NSUTF16LittleEndianStringEncoding);case"base64":return void a.dataUsingEncoding(NSUTF8StringEncoding).base64EncodedStringWithOptions(0).writeToFile_atomically(e,!0);case"latin1":case"binary":return void a.writeToFile_atomically_encoding_error(e,!0,NSISOLatin1StringEncoding);case"hex":default:return void a.writeToFile_atomically_encoding_error(e,!0,NSUTF8StringEncoding,r)}}}},function(e,t){e.exports=require("sketch/settings")}]);"default"===e&&"function"==typeof n?n(t):n[e](t)}that.onRun=__skpm_run.bind(this,"default");
+var that = this;
+function __skpm_run (key, context) {
+  that.context = context;
+
+var exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch");
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports['default'] = function (context) {
+  // export options
+  var options = {
+    scales: '2',
+    formats: 'png',
+    output: '/tmp',
+    overwriting: true
+  };
+  var browser = Settings.settingForKey('browser-preview-browser') || 'Safari';
+  // get sketch document
+  var document = sketch.getSelectedDocument();
+  // get selected page
+  var page = document.selectedPage;
+
+  // if no artboard selected
+  if (context.selection.length == 0) {
+    context.document.showMessage('⚠️ Please select an artboard.');
+    return;
+  }
+
+  if (context.selection.length >= 1) {
+    var artboard = context.selection.firstObject();
+    if (artboard && artboard.isKindOfClass(MSArtboardGroup)) {
+      // show message
+      context.document.showMessage('Creating preview for "' + String(artboard.name()) + '" in ' + String(browser));
+      // create export file directory
+      var previewFile = (0, _createPreview2['default'])(artboard, options);
+      // play sound
+      util.runCommand("/usr/bin/afplay", ["/System/Library/Sounds/Glass.aiff"]);
+      // open export in browser
+      util.runCommand('/usr/bin/open', ["-a", browser, previewFile]);
+    }
+    return;
+  }
+};
+
+var _sketchUtils = __webpack_require__(2);
+
+var util = _interopRequireWildcard(_sketchUtils);
+
+var _createPreview = __webpack_require__(3);
+
+var _createPreview2 = _interopRequireDefault(_createPreview);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+var Settings = __webpack_require__(5);
+var sketch = __webpack_require__(0);
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.runCommand = runCommand;
+function runCommand(command, args) {
+  var task = NSTask.alloc().init();
+  task.setLaunchPath_(command);
+  task.arguments = args;
+  task.launch();
+  task.waitUntilExit();
+  return task.terminationStatus() == 0;
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var sketch = __webpack_require__(0);
+var fs = __webpack_require__(4);
+
+exports['default'] = function (artboard, options) {
+  // export file
+  sketch['export'](artboard, options);
+  var file = options.output + "/" + artboard.name() + "@" + options.scales + "x." + options.formats;
+  var htmlFile = String(options.output) + '/' + String(artboard.name()) + '.html';
+  var bgColor = '#ffffff';
+  if (artboard.hasBackgroundColor() === 1) {
+    var colorObj = artboard.backgroundColor();
+    bgColor = 'rgba(' + 255 * colorObj.red() + ',' + 255 * colorObj.green() + ',' + 255 * colorObj.blue() + ',' + String(colorObj.alpha()) + ')';
+  }
+
+  // create html
+  var html = '<!DOCTYPE html>\n  <html>\n    <head>\n      <title>' + String(artboard.name()) + '</title>\n      <style type="text/css">\n        html, body{\n          margin: 0;\n          background: ' + bgColor + ';\n        }\n        .flex{\n          width: 100vw;\n          display: flex;\n          justify-content: center;\n        }\n        img{\n          position: relative;\n          width: ' + String(artboard.bounds().size.width) + 'px;\n          height: ' + String(artboard.bounds().size.height) + 'px;\n        }\n      </style>\n    </head>\n    <body>\n      <div class="flex">\n        <img src="' + file + '" alt="' + String(artboard.name()) + '" /\n      </div>\n    </body>\n  </html>';
+  // create file
+  fs.writeFileSync(htmlFile, html);
+  // return file
+  return htmlFile;
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+// TODO: async. Should probably be done with NSFileHandle and some notifications
+// TODO: file descriptor. Needs to be done with NSFileHandle
+
+module.exports.constants = {
+  F_OK: 0,
+  R_OK: 4,
+  W_OK: 2,
+  X_OK: 1
+}
+
+module.exports.accessSync = function(path, mode) {
+  mode = mode | 0
+  var fileManager = NSFileManager.defaultManager()
+
+  switch (mode) {
+    case 0:
+      return module.exports.existsSync(path)
+    case 1:
+      return Boolean(fileManager.isExecutableFileAtPath(path))
+    case 2:
+      return Boolean(fileManager.isWritableFileAtPath(path))
+    case 3:
+      return Boolean(fileManager.isExecutableFileAtPath(path) && fileManager.isWritableFileAtPath(path))
+    case 4:
+      return Boolean(fileManager.isReadableFileAtPath(path))
+    case 5:
+      return Boolean(fileManager.isReadableFileAtPath(path) && fileManager.isExecutableFileAtPath(path))
+    case 6:
+      return Boolean(fileManager.isReadableFileAtPath(path) && fileManager.isWritableFileAtPath(path))
+    case 7:
+      return Boolean(fileManager.isReadableFileAtPath(path) && fileManager.isWritableFileAtPath(path) && fileManager.isExecutableFileAtPath(path))
+  }
+}
+
+module.exports.appendFileSync = function(file, data, options) {
+  if (!module.exports.existsSync(file)) {
+    data.writeToFile_atomically(file, true)
+  } else {
+    var handle = NSFileHandle.fileHandleForWritingAtPath(file)
+    handle.seekToEndOfFile()
+    handle.writeData(data.dataUsingEncoding(NSUTF8StringEncoding))
+  }
+}
+
+module.exports.chmodSync = function(path, mode) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.setAttributes_ofItemAtPath_error({
+    NSFilePosixPermissions: mode
+  }, path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.copyFileSync = function(path, dest, flags) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.copyItemAtPath_toPath_error(path, dest, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.existsSync = function(path) {
+  var fileManager = NSFileManager.defaultManager()
+  return Boolean(fileManager.fileExistsAtPath(path))
+}
+
+module.exports.linkSync = function(existingPath, newPath) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.linkItemAtPath_toPath_error(existingPath, newPath, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.mkdirSync = function(path, mode) {
+  mode = mode || 0o777
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error(path, false, {
+    NSFilePosixPermissions: mode
+  }, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.mkdtempSync = function(path) {
+  function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 6; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+  }
+  var tempPath = path + makeid()
+  module.exports.mkdirSync(tempPath)
+  return tempPath
+}
+
+module.exports.readdirSync = function(path) {
+  var fileManager = NSFileManager.defaultManager()
+  var paths = fileManager.subpathsAtPath(path)
+  var arr = []
+  for (var i = 0; i < paths.length; i++) {
+    arr.push(paths[i])
+  }
+  return arr
+}
+
+module.exports.readFileSync = function(path, options) {
+  var encoding = options && options.encoding ? options.encoding : (options ? options : 'buffer')
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var data = fileManager.contentsAtPath(path)
+  switch (encoding) {
+    case 'utf8':
+      return String(NSString.alloc().initWithData_encoding(data, NSUTF8StringEncoding))
+    case 'ascii':
+      return String(NSString.alloc().initWithData_encoding(data, NSASCIIStringEncoding))
+    case 'utf16le':
+    case 'ucs2':
+      return String(NSString.alloc().initWithData_encoding(data, NSUTF16LittleEndianStringEncoding))
+    case 'base64':
+      var nsdataDecoded = NSData.alloc().initWithBase64EncodedData_options(data, 0)
+      return String(NSString.alloc().initWithData_encoding(nsdataDecoded, NSUTF8StringEncoding))
+    case 'latin1':
+    case 'binary':
+      return String(NSString.alloc().initWithData_encoding(data, NSISOLatin1StringEncoding))
+    case 'hex':
+      // TODO: how?
+      return data
+    default:
+      return data
+  }
+}
+
+module.exports.readlinkSync = function(path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.destinationOfSymbolicLinkAtPath_error(path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+
+  return result
+}
+
+module.exports.realpathSync = function(path) {
+  return NSString.stringByResolvingSymlinksInPath(path)
+}
+
+module.exports.renameSync = function(oldPath, newPath) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.moveItemAtPath_toPath_error(oldPath, newPath, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.rmdirSync = function(path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  fileManager.removeItemAtPath_error(path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.statSync = function(path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.attributesOfItemAtPath_error(path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+
+  return {
+    dev: String(result.NSFileDeviceIdentifier),
+    // ino: 48064969, The file system specific "Inode" number for the file.
+    mode: result.NSFileType | result.NSFilePosixPermissions,
+    nlink: Number(result.NSFileReferenceCount),
+    uid: String(result.NSFileOwnerAccountID),
+    gid: String(result.NSFileGroupOwnerAccountID),
+    // rdev: 0, A numeric device identifier if the file is considered "special".
+    size: Number(result.NSFileSize),
+    // blksize: 4096, The file system block size for i/o operations.
+    // blocks: 8, The number of blocks allocated for this file.
+    atimeMs: Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000,
+    mtimeMs: Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000,
+    ctimeMs: Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000,
+    birthtimeMs: Number(result.NSFileCreationDate.timeIntervalSince1970()) * 1000,
+    atime: new Date(Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000 + 0.5), // the 0.5 comes from the node source. Not sure why it's added but in doubt...
+    mtime: new Date(Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000 + 0.5),
+    ctime: new Date(Number(result.NSFileModificationDate.timeIntervalSince1970()) * 1000 + 0.5),
+    birthtime: new Date(Number(result.NSFileCreationDate.timeIntervalSince1970()) * 1000 + 0.5),
+    isBlockDevice: function() { return result.NSFileType === NSFileTypeBlockSpecial },
+    isCharacterDevice: function() { return result.NSFileType === NSFileTypeCharacterSpecial },
+    isDirectory: function() { return result.NSFileType === NSFileTypeDirectory },
+    isFIFO: function() { return false },
+    isFile: function() { return result.NSFileType === NSFileTypeRegular },
+    isSocket: function() { return result.NSFileType === NSFileTypeSocket },
+    isSymbolicLink: function() { return result.NSFileType === NSFileTypeSymbolicLink },
+  }
+}
+
+module.exports.symlinkSync = function(target, path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.createSymbolicLinkAtPath_withDestinationPath_error(path, target, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.truncateSync = function(path, len) {
+  var hFile = NSFileHandle.fileHandleForUpdatingAtPath(sFilePath)
+  hFile.truncateFileAtOffset(len || 0)
+  hFile.closeFile()
+}
+
+module.exports.unlinkSync = function(path) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.removeItemAtPath_error(path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.utimesSync = function(path, aTime, mTime) {
+  var err = MOPointer.alloc().init()
+  var fileManager = NSFileManager.defaultManager()
+  var result = fileManager.setAttributes_ofItemAtPath_error({
+    NSFileModificationDate: aTime
+  }, path, err)
+
+  if (err.value() !== null) {
+    throw new Error(err.value())
+  }
+}
+
+module.exports.writeFileSync = function(path, data, options) {
+  var encoding = options && options.encoding ? options.encoding : (options ? options : 'utf8')
+
+  if (data && data.mocha && data.mocha().class() === 'NSData') {
+    data.writeToFile_atomically(path, true)
+    return
+  }
+
+  var err = MOPointer.alloc().init()
+  var string = NSString.stringWithString(data)
+
+  switch (encoding) {
+    case 'utf8':
+      string.writeToFile_atomically_encoding_error(path, true, NSUTF8StringEncoding, err)
+      return
+    case 'ascii':
+      string.writeToFile_atomically_encoding_error(path, true, NSASCIIStringEncoding)
+      return
+    case 'utf16le':
+    case 'ucs2':
+      string.writeToFile_atomically_encoding_error(path, true, NSUTF16LittleEndianStringEncoding)
+      return
+    case 'base64':
+      var plainData = string.dataUsingEncoding(NSUTF8StringEncoding)
+      var nsdataEncoded = plainData.base64EncodedStringWithOptions(0)
+      nsdataEncoded.writeToFile_atomically(path, true)
+      return
+    case 'latin1':
+    case 'binary':
+      string.writeToFile_atomically_encoding_error(path, true, NSISOLatin1StringEncoding)
+      return
+    case 'hex':
+      // TODO: how?
+    default:
+      string.writeToFile_atomically_encoding_error(path, true, NSUTF8StringEncoding, err)
+      return
+  }
+}
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch/settings");
+
+/***/ })
+/******/ ]);
+  if (key === 'default' && typeof exports === 'function') {
+    exports(context);
+  } else {
+    exports[key](context);
+  }
+}
+that['onRun'] = __skpm_run.bind(this, 'default')
