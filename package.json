@@ -1,6 +1,6 @@
 {
   "name": "browser-preview",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "description": "Quickly preview an artboard in your browser.",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
   "skpm": {
     "name": "browser-preview",
     "manifest": "src/manifest.json",
-    "main": "plugin.sketchplugin",
+    "main": "browser-preview.sketchplugin",
     "assets": [
       "assets/**/*"
     ]
@@ -28,6 +28,7 @@
   },
   "author": "Lukas Oppermann <oppermann.lukas@gmail.com>",
   "dependencies": {
-    "@skpm/fs": "^0.1.2"
+    "@skpm/fs": "^0.1.2",
+    "skpm": "^1.0.15"
   }
 }
