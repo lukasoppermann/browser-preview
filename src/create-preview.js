@@ -4,8 +4,8 @@ let fs = require('@skpm/fs')
 export default (artboard, options) => {
   // export file
   sketch.export(artboard, options)
-  let file = options.output + "/" + artboard.name() + "@" + options.scales + "x." + options.formats
-  let htmlFile = `${options.output}/${artboard.name()}.html`
+  let file = options.output + "/" + encodeURIComponent(artboard.name()) + "@" + options.scales + "x." + options.formats
+  let htmlFile = `${options.output}/${encodeURIComponent(artboard.name())}.html`
   let bgColor = '#ffffff'
   if (artboard.hasBackgroundColor() === 1) {
     let colorObj = artboard.backgroundColor()
