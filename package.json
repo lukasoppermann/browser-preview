@@ -29,6 +29,6 @@
   "author": "Lukas Oppermann <oppermann.lukas@gmail.com>",
   "dependencies": {
     "@skpm/fs": "^0.1.4",
-    "skpm": "^1.1.1"
+    "skpm": "^1.1.4"
   }
 }
