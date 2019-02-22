@@ -7,6 +7,7 @@ export default (artboard, options) => {
   let file = options.output + "/" + encodeURIComponent(artboard.name()) + "@" + options.scales + "x." + options.formats
   let htmlFile = `${options.output}/${encodeURIComponent(artboard.name())}.html`
   let bgColor = '#ffffff'
+  let align = artboard.name().split(':').pop().trim()
   if (artboard.hasBackgroundColor() === 1) {
     let colorObj = artboard.backgroundColor()
     bgColor = `rgba(${255*colorObj.red()},${255*colorObj.green()},${255*colorObj.blue()},${colorObj.alpha()})`
@@ -24,8 +25,10 @@ export default (artboard, options) => {
         }
         .flex{
           width: 100vw;
+          max-width: 100vw;
+          overflow-x: hidden;
           display: flex;
-          justify-content: center;
+          justify-content: ${align === 'left' ? 'flex-start' : 'center'};
         }
         img{
           position: relative;

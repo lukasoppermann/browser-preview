@@ -21,5 +21,7 @@ Simply select an artboard and press `cmd` + `shift` + `+` or select `Preview Art
 
 You can customize the shortcut using the default mac keyboard settings or by using a keyboard shortcut plugin like [Keys for sketch](https://github.com/exevil/Keys-For-Sketch).
 
+If you want your screen to be aligned to the left of the browser window, simply suffix the artboard name with `:left`. E.g. "Desktop" would be "Desktop:left".
+
 ## Customize browser
 Using the settings you can select which browser to use for previewing the artboard.
