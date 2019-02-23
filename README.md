@@ -1,4 +1,6 @@
-# 🔍 Browser Preview
+# Browser Preview
+![Browser Preview](assets/browser-preview.png)
+
 > Quickly preview an artboard in your browser.
 
 This plugin previews the selected artboard in a `2x` resolution in the browsers, using the artboards background color as the websites background color. The artboard is centered horizontally in the browser.
