@@ -19,9 +19,9 @@ Go to the `install` tab in runner and search for `Browser Preview`.
 2. Double click the `browser-preview.sketchplugin` bundle
 
 ## Usage
-Simply select an artboard and press `cmd` + `shift` + `+` or select `Preview Artboard` from the Plugin menu.
+Simply select one or multiple artboards / layers and press `cmd` + `shift` + `p` or select `Preview Artboard` from the Plugin menu.
 
-You can customize the shortcut using the default mac keyboard settings or by using a keyboard shortcut plugin like [Keys for sketch](https://github.com/exevil/Keys-For-Sketch).
+You can customize the shortcut using the default mac keyboard settings and assign any shortcut for sketch to `Preview Artboard`.
 
 If you want your screen to be aligned to the left of the browser window, simply suffix the artboard name with `:left`. E.g. "Desktop" would be "Desktop:left".
 

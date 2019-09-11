@@ -11,7 +11,7 @@
       "name": "Preview Artboard",
       "identifier": "browser-preview",
       "script": "browser-preview.js",
-      "shortcut": "cmd shift +"
+      "shortcut": "cmd shift p"
     },
     {
       "name": "Settings",
@@ -26,7 +26,7 @@
       "browser-preview-settings"
     ]
   },
-  "version": "2.1.0",
+  "version": "2.1.1",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com/lukasoppermann/browser-preview/master/.appcast.xml"
 }

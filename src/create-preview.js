@@ -1,27 +1,32 @@
 let sketch = require('sketch')
 let fs = require('@skpm/fs')
 
-export default (artboard, options) => {
+export default (artboard
+  /* = {
+    object: artboard,
+    name: string
+    backgroundColor: string,
+    bounds: {
+      width: px
+      height: px
+    }
+  }*/
+, options) => {
   // export file
-  sketch.export(artboard, options)
-  let file = options.output + "/" + encodeURIComponent(artboard.name()) + "@" + options.scales + "x." + options.formats
-  let htmlFile = `${options.output}/${encodeURIComponent(artboard.name())}.html`
-  let bgColor = '#ffffff'
-  let align = artboard.name().split(':').pop().trim()
-  if (artboard.hasBackgroundColor() === 1) {
-    let colorObj = artboard.backgroundColor()
-    bgColor = `rgba(${255*colorObj.red()},${255*colorObj.green()},${255*colorObj.blue()},${colorObj.alpha()})`
-  }
+  sketch.export(artboard.object, options)
+  let file = options.output + "/" + artboard.name + "@" + options.scales + "x." + options.formats
+  let htmlFile = `${options.output}/${artboard.name}.html`
+  let align = artboard.name.split(':').pop().trim()
 
   // create html
   let html = `<!DOCTYPE html>
   <html>
     <head>
-      <title>${artboard.name()}</title>
+      <title>${artboard.name}</title>
       <style type="text/css">
         html, body{
           margin: 0;
-          background: ${bgColor};
+          background: ${artboard.backgroundColor};
         }
         .flex{
           width: 100vw;
@@ -32,14 +37,14 @@ export default (artboard, options) => {
         }
         img{
           position: relative;
-          width: ${artboard.bounds().size.width}px;
-          height: ${artboard.bounds().size.height}px;
+          width: ${artboard.bounds.width}px;
+          height: ${artboard.bounds.height}px;
         }
       </style>
     </head>
     <body>
       <div class="flex">
-        <img src="${file}" alt="${artboard.name()}" /
+        <img src="${file}" alt="${artboard.name}" /
       </div>
     </body>
   </html>`

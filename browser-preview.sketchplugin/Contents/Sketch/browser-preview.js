@@ -464,30 +464,82 @@ var sketch = __webpack_require__(/*! sketch */ "sketch");
     output: '/tmp',
     overwriting: true
   };
-  var browser = Settings.settingForKey('browser-preview-browser') || 'Safari'; // get sketch document
+  var browser = Settings.settingForKey('browser-preview-browser') || 'Default'; // get sketch document
 
   var document = sketch.getSelectedDocument(); // get selected page
+  // const page = document.selectedPage
 
-  var page = document.selectedPage; // if no artboard selected
+  var layers = document.selectedLayers;
+  var artboards = [];
+  var artboardIds = []; // if no artboard selected
 
-  if (context.selection.length == 0) {
-    context.document.showMessage('⚠️ Please select an artboard.');
+  if (layers.length === 0) {
+    context.document.showMessage('⚠️ Please select at least one artboard or layer.');
     return;
   }
 
-  if (context.selection.length >= 1) {
-    var artboard = context.selection.firstObject();
+  if (layers.length >= 1) {
+    artboards = layers.layers.map(function (layer) {
+      // get parent Artboard if layer is not an artboard
+      if (layer.getParentArtboard() !== undefined) {
+        layer = layer.getParentArtboard();
+      } // return special artboard object
 
-    if (artboard && artboard.isKindOfClass(MSArtboardGroup)) {
-      // show message
-      context.document.showMessage("Creating preview for \"".concat(artboard.name(), "\" in ").concat(browser)); // create export file directory
 
+      if (layer.type === 'Artboard') {
+        return {
+          name: encodeURIComponent(layer.name),
+          id: layer.id,
+          backgroundColor: layer.background.color,
+          bounds: layer.frame,
+          object: layer
+        };
+      }
+    }).filter(function (artboard) {
+      if (artboardIds.indexOf(artboard.id) > -1) {
+        return false;
+      }
+
+      return artboardIds.push(artboard.id);
+    });
+    context.document.showMessage("Creating preview for ".concat(artboards.length, " artboards."));
+    artboards.forEach(function (artboard) {
       var previewFile = Object(_create_preview__WEBPACK_IMPORTED_MODULE_1__["default"])(artboard, options); // play sound
 
       _sketch_utils__WEBPACK_IMPORTED_MODULE_0__["runCommand"]("/usr/bin/afplay", ["/System/Library/Sounds/Glass.aiff"]); // open export in browser
 
-      _sketch_utils__WEBPACK_IMPORTED_MODULE_0__["runCommand"]('/usr/bin/open', ["-a", browser, previewFile]);
-    }
+      if (browser === 'Default') {
+        _sketch_utils__WEBPACK_IMPORTED_MODULE_0__["runCommand"]('/usr/bin/open', [previewFile]);
+      } else {
+        _sketch_utils__WEBPACK_IMPORTED_MODULE_0__["runCommand"]('/usr/bin/open', ["-a", browser, previewFile]);
+      }
+    }); // if( layer.type === 'Artboard' ) {
+    //   let previewFile = createPreview(artboard, options)
+    //   // play sound
+    //   util.runCommand("/usr/bin/afplay", ["/System/Library/Sounds/Glass.aiff"])
+    //   // open export in browser
+    //   if (browser === 'Default') {
+    //     util.runCommand('/usr/bin/open', [previewFile])
+    //   } else {
+    //     util.runCommand('/usr/bin/open', ["-a", browser, previewFile])
+    //   }
+    // }
+    // )
+    // const artboard = context.selection.firstObject();
+    // if( artboard && artboard.isKindOfClass(MSArtboardGroup) ){
+    //   // show message
+    //   context.document.showMessage(`Creating preview for "${artboard.name()}" in ${browser}`)
+    //   // create export file directory
+    //   let previewFile = createPreview(artboard, options)
+    //   // play sound
+    //   util.runCommand("/usr/bin/afplay", ["/System/Library/Sounds/Glass.aiff"])
+    //   // open export in browser
+    //   if (browser === 'Default') {
+    //     util.runCommand('/usr/bin/open', [previewFile])
+    //   } else {
+    //     util.runCommand('/usr/bin/open', ["-a", browser, previewFile])
+    //   }
+    // }
 
     return;
   }
@@ -508,21 +560,24 @@ var sketch = __webpack_require__(/*! sketch */ "sketch");
 
 var fs = __webpack_require__(/*! @skpm/fs */ "./node_modules/@skpm/fs/index.js");
 
-/* harmony default export */ __webpack_exports__["default"] = (function (artboard, options) {
+/* harmony default export */ __webpack_exports__["default"] = (function (artboard
+/* = {
+  object: artboard,
+  name: string
+  backgroundColor: string,
+  bounds: {
+    width: px
+    height: px
+  }
+}*/
+, options) {
   // export file
-  sketch.export(artboard, options);
-  var file = options.output + "/" + encodeURIComponent(artboard.name()) + "@" + options.scales + "x." + options.formats;
-  var htmlFile = "".concat(options.output, "/").concat(encodeURIComponent(artboard.name()), ".html");
-  var bgColor = '#ffffff';
-  var align = artboard.name().split(':').pop().trim();
+  sketch.export(artboard.object, options);
+  var file = options.output + "/" + artboard.name + "@" + options.scales + "x." + options.formats;
+  var htmlFile = "".concat(options.output, "/").concat(artboard.name, ".html");
+  var align = artboard.name.split(':').pop().trim(); // create html
 
-  if (artboard.hasBackgroundColor() === 1) {
-    var colorObj = artboard.backgroundColor();
-    bgColor = "rgba(".concat(255 * colorObj.red(), ",").concat(255 * colorObj.green(), ",").concat(255 * colorObj.blue(), ",").concat(colorObj.alpha(), ")");
-  } // create html
-
-
-  var html = "<!DOCTYPE html>\n  <html>\n    <head>\n      <title>".concat(artboard.name(), "</title>\n      <style type=\"text/css\">\n        html, body{\n          margin: 0;\n          background: ").concat(bgColor, ";\n        }\n        .flex{\n          width: 100vw;\n          max-width: 100vw;\n          overflow-x: hidden;\n          display: flex;\n          justify-content: ").concat(align === 'left' ? 'flex-start' : 'center', ";\n        }\n        img{\n          position: relative;\n          width: ").concat(artboard.bounds().size.width, "px;\n          height: ").concat(artboard.bounds().size.height, "px;\n        }\n      </style>\n    </head>\n    <body>\n      <div class=\"flex\">\n        <img src=\"").concat(file, "\" alt=\"").concat(artboard.name(), "\" /\n      </div>\n    </body>\n  </html>"); // create file
+  var html = "<!DOCTYPE html>\n  <html>\n    <head>\n      <title>".concat(artboard.name, "</title>\n      <style type=\"text/css\">\n        html, body{\n          margin: 0;\n          background: ").concat(artboard.backgroundColor, ";\n        }\n        .flex{\n          width: 100vw;\n          max-width: 100vw;\n          overflow-x: hidden;\n          display: flex;\n          justify-content: ").concat(align === 'left' ? 'flex-start' : 'center', ";\n        }\n        img{\n          position: relative;\n          width: ").concat(artboard.bounds.width, "px;\n          height: ").concat(artboard.bounds.height, "px;\n        }\n      </style>\n    </head>\n    <body>\n      <div class=\"flex\">\n        <img src=\"").concat(file, "\" alt=\"").concat(artboard.name, "\" /\n      </div>\n    </body>\n  </html>"); // create file
 
   fs.writeFileSync(htmlFile, html); // return file
 

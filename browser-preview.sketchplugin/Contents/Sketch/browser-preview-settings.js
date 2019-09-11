@@ -105,17 +105,25 @@ var UI = __webpack_require__(/*! sketch/ui */ "sketch/ui");
 var Settings = __webpack_require__(/*! sketch/settings */ "sketch/settings");
 
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
-  var currentBrowser = Settings.settingForKey('browser-preview-browser') || 'Safari';
-  var options = ['Safari', 'Google Chrome', 'Firefox', 'Opera'];
-  var selection = UI.getSelectionFromUser("Select your preferred browser", options, options.findIndex(function (element) {
-    return element === currentBrowser;
-  }));
-  var ok = selection[2];
-  var value = options[selection[1]];
+  var currentBrowser = Settings.settingForKey('browser-preview-browser') || 'Default';
+  var options = ['Default', 'Safari', 'Google Chrome', 'Firefox', 'Opera'];
+  UI.getInputFromUser("Select your preferred browser", {
+    type: UI.INPUT_TYPE.selection,
+    possibleValues: options,
+    description: 'Choose which browser should be used to preview your designs.',
+    initialValue: options.findIndex(function (element) {
+      return element === currentBrowser;
+    })
+  }, function (err, value) {
+    if (err) {
+      // most likely the user canceled the input
+      return options.findIndex(function (element) {
+        return element === currentBrowser;
+      });
+    }
 
-  if (ok) {
     Settings.setSettingForKey('browser-preview-browser', value);
-  }
+  });
 });
 
 /***/ }),

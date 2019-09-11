@@ -11,7 +11,7 @@
       "name": "Preview Artboard",
       "identifier": "browser-preview",
       "script": "./browser-preview.js",
-      "shortcut": "cmd shift +"
+      "shortcut": "cmd shift p"
     },
     {
       "name": "Settings",
