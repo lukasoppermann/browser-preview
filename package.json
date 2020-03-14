@@ -24,11 +24,12 @@
     "postinstall": "npm run build && skpm-link"
   },
   "devDependencies": {
-    "@skpm/builder": "^0.5.8"
+    "@skpm/builder": "^0.7.5"
   },
   "author": "Lukas Oppermann <oppermann.lukas@gmail.com>",
   "dependencies": {
-    "@skpm/fs": "^0.1.4",
-    "skpm": "^1.1.13"
+    "@skpm/fs": "^0.2.5",
+    "sketch-module-web-view": "^3.4.1",
+    "skpm": "^1.3.1"
   }
 }
