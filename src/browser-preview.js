@@ -14,10 +14,7 @@ export default function (context) {
     }
     let browser = Settings.settingForKey('browserPreference') || 'Default';
     let sound = Settings.settingForKey('soundPreference');
-    console.log({
-        browser,
-        sound
-    })
+
     // get sketch document
     const document = sketch.getSelectedDocument()
     // get selected page
