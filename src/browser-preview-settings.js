@@ -13,7 +13,7 @@ export default function (context) {
     const options = {
         identifier: 'browserPreviewSettings',
         width: 320,
-        height: 260,
+        height: 290,
         show: false,
         resizable: false,
         title: 'Browser Preview - Settings',
