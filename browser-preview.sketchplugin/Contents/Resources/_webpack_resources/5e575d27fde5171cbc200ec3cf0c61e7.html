@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+    <meta charset="utf-8" />
+    <style>
+    body {
+      --color-prominent: rgb(0,5,10);
+      --color-medium: rgb(35,36,37);
+      --color-subtle: rgb(200,200,200);
+      --bg-color: rgb(242,242,242);
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        --color-prominent: rgb(250,250,250);
+        --color-medium: rgb(150,151,152);
+        --color-subtle: rgb(66,67,68);
+        --bg-color: rgb(46,47,48);
+      }
+    }
+      body.__skpm-light {
+          --color-prominent: rgb(0,5,10);
+          --color-medium: rgb(35,36,37);
+          --color-subtle: rgb(0,0,0);
+          --bg-color: rgb(242,242,242);
+      }
+
+      body.__skpm-dark {
+          --color-prominent: rgb(250,250,250);
+          --color-medium: rgb(150,151,152);
+          --color-subtle: rgb(30,31,32);
+          --bg-color: rgb(46,47,48);
+      }
+        html {
+            box-sizing: border-box;
+            overflow: hidden;
+            cursor: default;
+        }
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-size: 14px;
+            letter-spacing: -0.008px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            padding: 16px;
+            background-color: var(--bg-color);
+            color: var(--color-medium);
+        }
+        input,
+        textarea,
+        select {
+            -webkit-user-select: auto;
+            user-select: auto;
+            color: #505050;
+            border-radius: 4px;
+            padding: 4px 0;
+        }
+
+        body.__skpm-dark input,
+        body.__skpm-dark textarea {
+            color: #e3e3e3;
+            background-color: #464545;
+        }
+        footer {
+            padding-top: 4px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        button {
+            background-color: transparent;
+            background-image: linear-gradient(-180deg, #747474 0%, #666666 100%);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.20);
+            border-radius: 3px;
+            color: #fff;
+            border: none;
+            font-size: 14px;
+            width: 100%;
+            height: 32px;
+            margin-top: 16px;
+            line-height: 20px;
+        }
+
+        .settings_item__headline {
+            color: var(--color-prominent);
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 0.5em;
+        }
+        .settings_item__description {
+          line-height: 1.4;
+          color: var(--color-medium);
+        }
+        hr {
+          display: block;
+          height: 1px;
+          border: 0;
+          border-top: 1px solid var(--color-subtle);
+          margin: 1em 0;
+          padding: 0;
+
+        }
+        div {
+            padding: 8px 0;
+        }
+
+    </style>
+</head>
+
+<body>
+    <main class="settings_wrapper">
+        <div class="settings_item">
+            <label class="settings_item__headline">Prefered Browser: </label>
+            <select name="browserPreference" id="browserPreference">
+                <option selected value="Safari">Safari</option>
+                <option value="Google Chrome">Chrome</option>
+                <option value="Firefox">Firefox</option>
+                <option value="Opera">Opera</option>
+            </select>
+            <p class="settings_item__description">Choose which browser should be used to preview your designs.</p>
+        </div>
+        <hr />
+        <div class="settings_item">
+            <label class="settings_item__headline">Play Sound: <input type="checkbox" id="soundPreference"></label>
+            <p class="settings_item__description">Play a sound effect before the design is previewed.</p>
+        </div>
+        <footer>
+          <button id="submit">Save</button>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        let allInputs = [];
+
+        ["soundPreference", "browserPreference"].forEach(id => {
+            allInputs.push(document.getElementById(id));
+        });
+
+        window.populateSettings = () => {
+            allInputs.forEach(input => {
+                if (input.type == "checkbox") {
+                    input.checked = window.settings[input.id];
+                } else {
+                    input.value = window.settings[input.id];
+                };
+            });
+
+            // for debugging purposes
+            return 'settings are populated';
+        };
+
+        const generateSettings = () => {
+            let obj = {};
+
+            allInputs.forEach(input => {
+                let val = input.value;
+
+                if (input.type === 'checkbox') {
+                    val = Boolean(input.checked);
+                } else {
+                    val = input.value
+                };
+
+                obj[input.id] = val;
+            });
+            return obj;
+        };
+
+        document.getElementById('submit').addEventListener("click", function () {
+            window.postMessage('updateSettings', generateSettings());
+        });
+
+    </script>
+</body>
+
+</html>

@@ -464,7 +464,8 @@ var sketch = __webpack_require__(/*! sketch */ "sketch");
     output: '/tmp',
     overwriting: true
   };
-  var browser = Settings.settingForKey('browser-preview-browser') || 'Default'; // get sketch document
+  var browser = Settings.settingForKey('browserPreference') || 'Default';
+  var sound = Settings.settingForKey('soundPreference'); // get sketch document
 
   var document = sketch.getSelectedDocument(); // get selected page
   // const page = document.selectedPage
@@ -504,9 +505,12 @@ var sketch = __webpack_require__(/*! sketch */ "sketch");
     });
     context.document.showMessage("Creating preview for ".concat(artboards.length, " artboards."));
     artboards.forEach(function (artboard) {
-      var previewFile = Object(_create_preview__WEBPACK_IMPORTED_MODULE_1__["default"])(artboard, options); // play sound
+      var previewFile = Object(_create_preview__WEBPACK_IMPORTED_MODULE_1__["default"])(artboard, options); // play sound if the setting is enabled
 
-      _sketch_utils__WEBPACK_IMPORTED_MODULE_0__["runCommand"]("/usr/bin/afplay", ["/System/Library/Sounds/Glass.aiff"]); // open export in browser
+      if (sound) {
+        _sketch_utils__WEBPACK_IMPORTED_MODULE_0__["runCommand"]("/usr/bin/afplay", ["/System/Library/Sounds/Glass.aiff"]);
+      } // open export in browser
+
 
       if (browser === 'Default') {
         _sketch_utils__WEBPACK_IMPORTED_MODULE_0__["runCommand"]('/usr/bin/open', [previewFile]);

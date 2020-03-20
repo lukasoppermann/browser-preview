@@ -91,62 +91,118 @@ var exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/settingsView.html":
+/*!*************************************!*\
+  !*** ./resources/settingsView.html ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "file://" + context.plugin.urlForResourceNamed("_webpack_resources/c86757e6fcef13c2a4bf3641801c0ef2.html").path();
+
+/***/ }),
+
 /***/ "./src/browser-preview-settings.js":
 /*!*****************************************!*\
   !*** ./src/browser-preview-settings.js ***!
   \*****************************************/
-/*! exports provided: default */
+/*! exports provided: default, getDefaultSettings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var UI = __webpack_require__(/*! sketch/ui */ "sketch/ui");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDefaultSettings", function() { return getDefaultSettings; });
+var BrowserWindow = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'sketch-module-web-view'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
-var Settings = __webpack_require__(/*! sketch/settings */ "sketch/settings");
+var sketch = __webpack_require__(/*! sketch */ "sketch");
 
+var Settings = sketch.Settings;
+var UI = sketch.UI;
+var settingsKeys = {
+  BROWSERPREFERENCE: 'browserPreference',
+  SOUNDPREFERENCE: 'soundPreference'
+};
 /* harmony default export */ __webpack_exports__["default"] = (function (context) {
-  var currentBrowser = Settings.settingForKey('browser-preview-browser') || 'Default';
-  var options = ['Default', 'Safari', 'Google Chrome', 'Firefox', 'Opera'];
-  UI.getInputFromUser("Select your preferred browser", {
-    type: UI.INPUT_TYPE.selection,
-    possibleValues: options,
-    description: 'Choose which browser should be used to preview your designs.',
-    initialValue: options.findIndex(function (element) {
-      return element === currentBrowser;
-    })
-  }, function (err, value) {
-    if (err) {
-      // most likely the user canceled the input
-      return options.findIndex(function (element) {
-        return element === currentBrowser;
-      });
-    }
-
-    Settings.setSettingForKey('browser-preview-browser', value);
+  var options = {
+    identifier: 'browserPreviewSettings',
+    width: 320,
+    height: 260,
+    show: false,
+    resizable: false,
+    title: 'Browser Preview - Settings',
+    minimizable: false,
+    maximizable: false,
+    alwaysOnTop: false,
+    devTools: false,
+    center: true,
+    backgroundColor: '#ececec',
+    hidesOnDeactive: false
+  };
+  var browserWindow = new BrowserWindow(options);
+  browserWindow.once('ready-to-show', function () {
+    browserWindow.show();
   });
+  var webContents = browserWindow.webContents;
+  webContents.on('did-start-loading', function () {
+    var defaultSettings = JSON.stringify(getDefaultSettings());
+    browserWindow.webContents.executeJavaScript("window.settings =" + defaultSettings + "; populateSettings();").then(function (res) {
+      return console.info(res);
+    }).catch(function (err) {
+      return console.error(err);
+    });
+  });
+  webContents.on('updateSettings', function (data) {
+    setSettings(data);
+    browserWindow.close();
+  });
+  browserWindow.on('closed', function () {
+    browserWindow = null;
+  });
+  browserWindow.loadURL(__webpack_require__(/*! ../resources/settingsView.html */ "./resources/settingsView.html"));
 });
 
+function getSettings() {
+  var obj = {};
+  var isUndefined = true;
+  Object.keys(settingsKeys).forEach(function (key) {
+    obj[settingsKeys[key]] = Settings.settingForKey(settingsKeys[key]);
+    isUndefined = obj[settingsKeys[key]] === undefined;
+  });
+  return {
+    data: obj,
+    isUndefined: isUndefined
+  };
+}
+
+function setSettings(data) {
+  Object.keys(data).forEach(function (key) {
+    Settings.setSettingForKey(key, data[key]);
+  });
+}
+
+function getDefaultSettings() {
+  var currentSettings = getSettings();
+
+  if (currentSettings.isUndefined) {
+    var obj = {};
+    obj[settingsKeys.BROWSERPREFERENCE] = 'safari', obj[settingsKeys.SOUNDPREFERENCE] = false;
+    setSettings(obj);
+    return obj;
+  } else {
+    return currentSettings.data;
+  }
+}
+
 /***/ }),
 
-/***/ "sketch/settings":
-/*!**********************************!*\
-  !*** external "sketch/settings" ***!
-  \**********************************/
+/***/ "sketch":
+/*!*************************!*\
+  !*** external "sketch" ***!
+  \*************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("sketch/settings");
-
-/***/ }),
-
-/***/ "sketch/ui":
-/*!****************************!*\
-  !*** external "sketch/ui" ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("sketch/ui");
+module.exports = require("sketch");
 
 /***/ })
 

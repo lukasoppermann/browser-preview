@@ -736,11 +736,7 @@ var sketch = __webpack_require__(/*! sketch */ "sketch");
     overwriting: true
   };
   var browser = Settings.settingForKey('browserPreference') || 'Default';
-  var sound = Settings.settingForKey('soundPreference');
-  console.log({
-    browser: browser,
-    sound: sound
-  }); // get sketch document
+  var sound = Settings.settingForKey('soundPreference'); // get sketch document
 
   var document = sketch.getSelectedDocument(); // get selected page
   // const page = document.selectedPage

@@ -2509,7 +2509,7 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/c86757e6fcef13c2a4bf3641801c0ef2.html";
+module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Contents/Sketch")[0] + ".sketchplugin/Contents/Resources/_webpack_resources/654d608bf0c0cbdb117aa93fa1933ff7.html";
 
 /***/ }),
 
@@ -2537,7 +2537,7 @@ var settingsKeys = {
   var options = {
     identifier: 'browserPreviewSettings',
     width: 320,
-    height: 260,
+    height: 290,
     show: false,
     resizable: false,
     title: 'Browser Preview - Settings',
