@@ -10,13 +10,13 @@
     {
       "name": "Preview Artboard",
       "identifier": "browser-preview",
-      "script": "browser-preview.js",
+      "script": "__browser-preview.js",
       "shortcut": "cmd shift p"
     },
     {
       "name": "Settings",
       "identifier": "browser-preview-settings",
-      "script": "browser-preview-settings.js"
+      "script": "__browser-preview-settings.js"
     }
   ],
   "menu": {
