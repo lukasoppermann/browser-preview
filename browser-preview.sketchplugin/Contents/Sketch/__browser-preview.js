@@ -114,12 +114,12 @@ module.exports.constants = {
   F_OK: 0,
   R_OK: 4,
   W_OK: 2,
-  X_OK: 1
+  X_OK: 1,
 };
 
 module.exports.access = NOT_IMPLEMENTED("access");
 
-module.exports.accessSync = function(path, mode) {
+module.exports.accessSync = function (path, mode) {
   mode = mode | 0;
   var fileManager = NSFileManager.defaultManager();
 
@@ -166,7 +166,7 @@ module.exports.accessSync = function(path, mode) {
 
 module.exports.appendFile = NOT_IMPLEMENTED("appendFile");
 
-module.exports.appendFileSync = function(file, data, options) {
+module.exports.appendFileSync = function (file, data, options) {
   if (!module.exports.existsSync(file)) {
     return module.exports.writeFileSync(file, data, options);
   }
@@ -186,12 +186,12 @@ module.exports.appendFileSync = function(file, data, options) {
 
 module.exports.chmod = NOT_IMPLEMENTED("chmod");
 
-module.exports.chmodSync = function(path, mode) {
+module.exports.chmodSync = function (path, mode) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   fileManager.setAttributes_ofItemAtPath_error(
     {
-      NSFilePosixPermissions: mode
+      NSFilePosixPermissions: mode,
     },
     path,
     err
@@ -210,7 +210,7 @@ module.exports.closeSync = NOT_IMPLEMENTED("closeSync");
 
 module.exports.copyFile = NOT_IMPLEMENTED("copyFile");
 
-module.exports.copyFileSync = function(path, dest, flags) {
+module.exports.copyFileSync = function (path, dest, flags) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   fileManager.copyItemAtPath_toPath_error(path, dest, err);
@@ -225,7 +225,7 @@ module.exports.createWriteStream = NOT_IMPLEMENTED("createWriteStream");
 
 module.exports.exists = NOT_IMPLEMENTED("exists");
 
-module.exports.existsSync = function(path) {
+module.exports.existsSync = function (path) {
   var fileManager = NSFileManager.defaultManager();
   return Boolean(Number(fileManager.fileExistsAtPath(path)));
 };
@@ -252,7 +252,7 @@ module.exports.lchownSync = NOT_IMPLEMENTED("lchownSync");
 
 module.exports.link = NOT_IMPLEMENTED("link");
 
-module.exports.linkSync = function(existingPath, newPath) {
+module.exports.linkSync = function (existingPath, newPath) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   fileManager.linkItemAtPath_toPath_error(existingPath, newPath, err);
@@ -264,7 +264,7 @@ module.exports.linkSync = function(existingPath, newPath) {
 
 module.exports.lstat = NOT_IMPLEMENTED("lstat");
 
-module.exports.lstatSync = function(path) {
+module.exports.lstatSync = function (path) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   var result = fileManager.attributesOfItemAtPath_error(path, err);
@@ -278,7 +278,7 @@ module.exports.lstatSync = function(path) {
 
 module.exports.mkdir = NOT_IMPLEMENTED("mkdir");
 
-module.exports.mkdirSync = function(path, options) {
+module.exports.mkdirSync = function (path, options) {
   var mode = 0o777;
   var recursive = false;
   if (options && options.mode) {
@@ -296,7 +296,7 @@ module.exports.mkdirSync = function(path, options) {
     path,
     recursive,
     {
-      NSFilePosixPermissions: mode
+      NSFilePosixPermissions: mode,
     },
     err
   );
@@ -308,7 +308,7 @@ module.exports.mkdirSync = function(path, options) {
 
 module.exports.mkdtemp = NOT_IMPLEMENTED("mkdtemp");
 
-module.exports.mkdtempSync = function(path) {
+module.exports.mkdtempSync = function (path) {
   function makeid() {
     var text = "";
     var possible =
@@ -331,7 +331,7 @@ module.exports.read = NOT_IMPLEMENTED("read");
 
 module.exports.readdir = NOT_IMPLEMENTED("readdir");
 
-module.exports.readdirSync = function(path, options) {
+module.exports.readdirSync = function (path, options) {
   var encoding = encodingFromOptions(options, "utf8");
   var fileManager = NSFileManager.defaultManager();
   var paths = fileManager.subpathsAtPath(path);
@@ -345,7 +345,7 @@ module.exports.readdirSync = function(path, options) {
 
 module.exports.readFile = NOT_IMPLEMENTED("readFile");
 
-module.exports.readFileSync = function(path, options) {
+module.exports.readFileSync = function (path, options) {
   var encoding = encodingFromOptions(options, "buffer");
   var fileManager = NSFileManager.defaultManager();
   var data = fileManager.contentsAtPath(path);
@@ -366,7 +366,7 @@ module.exports.readFileSync = function(path, options) {
 
 module.exports.readlink = NOT_IMPLEMENTED("readlink");
 
-module.exports.readlinkSync = function(path) {
+module.exports.readlinkSync = function (path) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   var result = fileManager.destinationOfSymbolicLinkAtPath_error(path, err);
@@ -383,15 +383,17 @@ module.exports.readSync = NOT_IMPLEMENTED("readSync");
 module.exports.realpath = NOT_IMPLEMENTED("realpath");
 module.exports.realpath.native = NOT_IMPLEMENTED("realpath.native");
 
-module.exports.realpathSync = function(path) {
-  return String(NSString.stringWithString(path).stringByResolvingSymlinksInPath());
+module.exports.realpathSync = function (path) {
+  return String(
+    NSString.stringWithString(path).stringByResolvingSymlinksInPath()
+  );
 };
 
 module.exports.realpathSync.native = NOT_IMPLEMENTED("realpathSync.native");
 
 module.exports.rename = NOT_IMPLEMENTED("rename");
 
-module.exports.renameSync = function(oldPath, newPath) {
+module.exports.renameSync = function (oldPath, newPath) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   fileManager.moveItemAtPath_toPath_error(oldPath, newPath, err);
@@ -424,14 +426,14 @@ module.exports.renameSync = function(oldPath, newPath) {
 
 module.exports.rmdir = NOT_IMPLEMENTED("rmdir");
 
-module.exports.rmdirSync = function(path) {
+module.exports.rmdirSync = function (path) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   var isDirectory = module.exports.lstatSync(path).isDirectory();
   if (!isDirectory) {
     throw fsError("ENOTDIR", {
       path: path,
-      syscall: "rmdir"
+      syscall: "rmdir",
     });
   }
   fileManager.removeItemAtPath_error(path, err);
@@ -449,13 +451,13 @@ module.exports.stat = NOT_IMPLEMENTED("stat");
 // > link, then it returns information about the link itself, not the file
 // > that it refers to.
 // http://man7.org/linux/man-pages/man2/lstat.2.html
-module.exports.statSync = function(path) {
+module.exports.statSync = function (path) {
   return module.exports.lstatSync(module.exports.realpathSync(path));
 };
 
 module.exports.symlink = NOT_IMPLEMENTED("symlink");
 
-module.exports.symlinkSync = function(target, path) {
+module.exports.symlinkSync = function (target, path) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   var result = fileManager.createSymbolicLinkAtPath_withDestinationPath_error(
@@ -471,7 +473,7 @@ module.exports.symlinkSync = function(target, path) {
 
 module.exports.truncate = NOT_IMPLEMENTED("truncate");
 
-module.exports.truncateSync = function(path, len) {
+module.exports.truncateSync = function (path, len) {
   var hFile = NSFileHandle.fileHandleForUpdatingAtPath(sFilePath);
   hFile.truncateFileAtOffset(len || 0);
   hFile.closeFile();
@@ -479,14 +481,14 @@ module.exports.truncateSync = function(path, len) {
 
 module.exports.unlink = NOT_IMPLEMENTED("unlink");
 
-module.exports.unlinkSync = function(path) {
+module.exports.unlinkSync = function (path) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   var isDirectory = module.exports.lstatSync(path).isDirectory();
   if (isDirectory) {
     throw fsError("EPERM", {
       path: path,
-      syscall: "unlink"
+      syscall: "unlink",
     });
   }
   var result = fileManager.removeItemAtPath_error(path, err);
@@ -500,12 +502,12 @@ module.exports.unwatchFile = NOT_IMPLEMENTED("unwatchFile");
 
 module.exports.utimes = NOT_IMPLEMENTED("utimes");
 
-module.exports.utimesSync = function(path, aTime, mTime) {
+module.exports.utimesSync = function (path, aTime, mTime) {
   var err = MOPointer.alloc().init();
   var fileManager = NSFileManager.defaultManager();
   var result = fileManager.setAttributes_ofItemAtPath_error(
     {
-      NSFileModificationDate: aTime
+      NSFileModificationDate: aTime,
     },
     path,
     err
@@ -523,7 +525,7 @@ module.exports.write = NOT_IMPLEMENTED("write");
 
 module.exports.writeFile = NOT_IMPLEMENTED("writeFile");
 
-module.exports.writeFileSync = function(path, data, options) {
+module.exports.writeFileSync = function (path, data, options) {
   var encoding = encodingFromOptions(options, "utf8");
 
   var nsdata = Buffer.from(
@@ -544,7 +546,7 @@ module.exports.writeSync = NOT_IMPLEMENTED("writeSync");
   !*** ./node_modules/@skpm/fs/utils.js ***!
   \****************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 module.exports.parseStat = function parseStat(result) {
   return {
@@ -578,51 +580,51 @@ module.exports.parseStat = function parseStat(result) {
     birthtime: new Date(
       Number(result.NSFileCreationDate.timeIntervalSince1970()) * 1000 + 0.5
     ),
-    isBlockDevice: function() {
+    isBlockDevice: function () {
       return result.NSFileType === NSFileTypeBlockSpecial;
     },
-    isCharacterDevice: function() {
+    isCharacterDevice: function () {
       return result.NSFileType === NSFileTypeCharacterSpecial;
     },
-    isDirectory: function() {
+    isDirectory: function () {
       return result.NSFileType === NSFileTypeDirectory;
     },
-    isFIFO: function() {
+    isFIFO: function () {
       return false;
     },
-    isFile: function() {
+    isFile: function () {
       return result.NSFileType === NSFileTypeRegular;
     },
-    isSocket: function() {
+    isSocket: function () {
       return result.NSFileType === NSFileTypeSocket;
     },
-    isSymbolicLink: function() {
+    isSymbolicLink: function () {
       return result.NSFileType === NSFileTypeSymbolicLink;
-    }
+    },
   };
 };
 
 var ERRORS = {
   EPERM: {
     message: "operation not permitted",
-    errno: -1
+    errno: -1,
   },
   ENOENT: {
     message: "no such file or directory",
-    errno: -2
+    errno: -2,
   },
   EACCES: {
     message: "permission denied",
-    errno: -13
+    errno: -13,
   },
   ENOTDIR: {
     message: "not a directory",
-    errno: -20
+    errno: -20,
   },
   EISDIR: {
     message: "illegal operation on a directory",
-    errno: -21
-  }
+    errno: -21,
+  },
 };
 
 function fsError(code, options) {
@@ -635,7 +637,7 @@ function fsError(code, options) {
       (options.path ? " '" + options.path + "'" : "")
   );
 
-  Object.keys(options).forEach(function(k) {
+  Object.keys(options).forEach(function (k) {
     error[k] = options[k];
   });
 
@@ -658,27 +660,27 @@ module.exports.fsErrorForPath = function fsErrorForPath(
   if (!doesExist) {
     return fsError("ENOENT", {
       path: path,
-      syscall: syscall || "open"
+      syscall: syscall || "open",
     });
   }
   var isReadable = fileManager.isReadableFileAtPath(path);
   if (!isReadable) {
     return fsError("EACCES", {
       path: path,
-      syscall: syscall || "open"
+      syscall: syscall || "open",
     });
   }
   if (typeof shouldBeDir !== "undefined") {
-    var isDirectory = module.exports.lstatSync(path).isDirectory();
+    var isDirectory = __webpack_require__(/*! ./index */ "./node_modules/@skpm/fs/index.js").lstatSync(path).isDirectory();
     if (isDirectory && !shouldBeDir) {
       return fsError("EISDIR", {
         path: path,
-        syscall: syscall || "read"
+        syscall: syscall || "read",
       });
     } else if (!isDirectory && shouldBeDir) {
       return fsError("ENOTDIR", {
         path: path,
-        syscall: syscall || "read"
+        syscall: syscall || "read",
       });
     }
   }
@@ -697,7 +699,7 @@ module.exports.encodingFromOptions = function encodingFromOptions(
 };
 
 module.exports.NOT_IMPLEMENTED = function NOT_IMPLEMENTED(name) {
-  return function() {
+  return function () {
     throw new Error(
       "fs." +
         name +
@@ -850,9 +852,10 @@ var fs = __webpack_require__(/*! @skpm/fs */ "./node_modules/@skpm/fs/index.js")
   sketch.export(artboard.object, options);
   var file = options.output + "/" + artboard.name + "@" + options.scales + "x." + options.formats;
   var htmlFile = "".concat(options.output, "/").concat(artboard.name, ".html");
-  var align = artboard.name.split(':').pop().trim(); // create html
+  var align = artboard.name.split(':').pop().trim();
+  console.log(decodeURI(artboard.name)); // create html
 
-  var html = "<!DOCTYPE html>\n  <html>\n    <head>\n      <title>".concat(artboard.name, "</title>\n      <style type=\"text/css\">\n        html, body{\n          margin: 0;\n          background: ").concat(artboard.backgroundColor, ";\n        }\n        .flex{\n          width: 100vw;\n          max-width: 100vw;\n          overflow-x: hidden;\n          display: flex;\n          justify-content: ").concat(align === 'left' ? 'flex-start' : 'center', ";\n        }\n        img{\n          position: relative;\n          width: ").concat(artboard.bounds.width, "px;\n          height: ").concat(artboard.bounds.height, "px;\n        }\n      </style>\n    </head>\n    <body>\n      <div class=\"flex\">\n        <img src=\"").concat(file, "\" alt=\"").concat(artboard.name, "\" /\n      </div>\n    </body>\n  </html>"); // create file
+  var html = "<!DOCTYPE html>\n  <html>\n    <head>\n      <title>".concat(decodeURI(artboard.name), "</title>\n      <style type=\"text/css\">\n        html, body{\n          margin: 0;\n          background: ").concat(artboard.backgroundColor, ";\n        }\n        .flex{\n          width: 100vw;\n          max-width: 100vw;\n          overflow-x: hidden;\n          display: flex;\n          justify-content: ").concat(align === 'left' ? 'flex-start' : 'center', ";\n        }\n        img{\n          position: relative;\n          width: ").concat(artboard.bounds.width, "px;\n          height: ").concat(artboard.bounds.height, "px;\n        }\n      </style>\n    </head>\n    <body>\n      <div class=\"flex\">\n        <img src=\"").concat(file, "\" alt=\"").concat(artboard.name, "\" /\n      </div>\n    </body>\n  </html>"); // create file
 
   fs.writeFileSync(htmlFile, html); // return file
 

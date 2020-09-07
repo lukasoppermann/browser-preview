@@ -524,10 +524,10 @@ function parseHexColor(color) {
     return NSColor.whiteColor()
   }
 
-  var r = parseInt(hex.slice(0, 2), 16)
-  var g = parseInt(hex.slice(2, 4), 16)
-  var b = parseInt(hex.slice(4, 6), 16)
-  var a = parseInt(hex.slice(6, 8), 16)
+  var r = parseInt(hex.slice(0, 2), 16) / 255
+  var g = parseInt(hex.slice(2, 4), 16) / 255
+  var b = parseInt(hex.slice(4, 6), 16) / 255
+  var a = parseInt(hex.slice(6, 8), 16) / 255
 
   return NSColor.colorWithSRGBRed_green_blue_alpha(r, g, b, a)
 }
@@ -1892,16 +1892,15 @@ module.exports = function(browserWindow, panel, webview, options) {
     ThemeObserverClass = new ObjCClass({
       utils: null,
 
-      'observeValueForKeyPath:ofObject:change:context:': function() {
+      'observeValueForKeyPath:ofObject:change:context:': function(keyPath,object,change) {
+        const newAppearance = change[NSKeyValueChangeNewKey]
+        const isDark = String(newAppearance.bestMatchFromAppearancesWithNames(['NSAppearanceNameAqua', 'NSAppearanceNameDarkAqua'])) === 'NSAppearanceNameDarkAqua'
+
         this.utils.executeJavaScript(
           "document.body.classList.remove('__skpm-" +
-            (typeof MSTheme !== 'undefined' && MSTheme.sharedTheme().isDark()
-              ? 'light'
-              : 'dark') +
+            (isDark ? 'light' : 'dark') +
             "'); document.body.classList.add('__skpm-" +
-            (typeof MSTheme !== 'undefined' && MSTheme.sharedTheme().isDark()
-              ? 'dark'
-              : 'light') +
+            (isDark ? 'dark' : 'light') +
             "')"
         )
       },
@@ -2109,7 +2108,7 @@ module.exports = function(browserWindow, panel, webview, options) {
   NSApplication.sharedApplication().addObserver_forKeyPath_options_context(
     themeObserver,
     'effectiveAppearance',
-    NSKeyValueChangeNewKey,
+    NSKeyValueObservingOptionNew,
     null
   )
 
@@ -2292,7 +2291,7 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
   }
 
   webContents.getURL = function() {
-    return String(webview.url())
+    return String(webview.URL())
   }
 
   webContents.getTitle = function() {

@@ -22,7 +22,7 @@ export default (artboard
   let html = `<!DOCTYPE html>
   <html>
     <head>
-      <title>${artboard.name}</title>
+      <title>${decodeURI(artboard.name)}</title>
       <style type="text/css">
         html, body{
           margin: 0;
