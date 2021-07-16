@@ -14,7 +14,8 @@ export default (artboard
 , options) => {
   // export file
   sketch.export(artboard.object, options)
-  let file = options.output + "/" + artboard.name + "@" + options.scales + "x." + options.formats
+  let artboardFileName =  artboard.name.replace(/%2F/gi, '/').replace(/%252F/gi, '/')
+  let file = options.output + "/" + artboardFileName + "@" + options.scales + "x." + options.formats
   let htmlFile = `${options.output}/${artboard.name}.html`
   let align = artboard.name.split(':').pop().trim()
 
