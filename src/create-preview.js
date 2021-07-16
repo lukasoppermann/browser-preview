@@ -45,7 +45,7 @@ export default (artboard
     </head>
     <body>
       <div class="flex">
-        <img src="${file}" alt="${artboard.name}" /
+        <img src="${file}" alt="${artboard.name}" />
       </div>
     </body>
   </html>`
