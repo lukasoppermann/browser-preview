@@ -850,12 +850,12 @@ var fs = __webpack_require__(/*! @skpm/fs */ "./node_modules/@skpm/fs/index.js")
 , options) {
   // export file
   sketch.export(artboard.object, options);
-  var file = options.output + "/" + artboard.name + "@" + options.scales + "x." + options.formats;
+  var artboardFileName = artboard.name.replace(/%2F/gi, '/').replace(/%252F/gi, '/');
+  var file = options.output + "/" + artboardFileName + "@" + options.scales + "x." + options.formats;
   var htmlFile = "".concat(options.output, "/").concat(artboard.name, ".html");
-  var align = artboard.name.split(':').pop().trim();
-  console.log(decodeURI(artboard.name)); // create html
+  var align = artboard.name.split(':').pop().trim(); // create html
 
-  var html = "<!DOCTYPE html>\n  <html>\n    <head>\n      <title>".concat(decodeURI(artboard.name), "</title>\n      <style type=\"text/css\">\n        html, body{\n          margin: 0;\n          background: ").concat(artboard.backgroundColor, ";\n        }\n        .flex{\n          width: 100vw;\n          max-width: 100vw;\n          overflow-x: hidden;\n          display: flex;\n          justify-content: ").concat(align === 'left' ? 'flex-start' : 'center', ";\n        }\n        img{\n          position: relative;\n          width: ").concat(artboard.bounds.width, "px;\n          height: ").concat(artboard.bounds.height, "px;\n        }\n      </style>\n    </head>\n    <body>\n      <div class=\"flex\">\n        <img src=\"").concat(file, "\" alt=\"").concat(artboard.name, "\" /\n      </div>\n    </body>\n  </html>"); // create file
+  var html = "<!DOCTYPE html>\n  <html>\n    <head>\n      <title>".concat(decodeURI(artboard.name), "</title>\n      <style type=\"text/css\">\n        html, body{\n          margin: 0;\n          background: ").concat(artboard.backgroundColor, ";\n        }\n        .flex{\n          width: 100vw;\n          max-width: 100vw;\n          overflow-x: hidden;\n          display: flex;\n          justify-content: ").concat(align === 'left' ? 'flex-start' : 'center', ";\n        }\n        img{\n          position: relative;\n          width: ").concat(artboard.bounds.width, "px;\n          height: ").concat(artboard.bounds.height, "px;\n        }\n      </style>\n    </head>\n    <body>\n      <div class=\"flex\">\n        <img src=\"").concat(file, "\" alt=\"").concat(artboard.name, "\" />\n      </div>\n    </body>\n  </html>"); // create file
 
   fs.writeFileSync(htmlFile, html); // return file
 
